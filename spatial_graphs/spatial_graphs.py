@@ -1,3 +1,18 @@
+""""
+Module for creating the SpatialGraph class.
+
+The SpatialGraph class is a child class of NetworkX's Graph class
+and inherits all its functionality. It has the additional
+attributes dists, locs and part which to store the 
+pairwise distances between nodes, node spatial locations
+and the graph's community structure, if known.
+
+
+Additionally it has two class methods which allow it to be
+instantiated as a random spatial network from a list of parameters.
+
+""""
+
 from networkx import Graph, DiGraph
 import networkx.convert_matrix as nxmat
 import numpy as np
@@ -38,10 +53,34 @@ def decay_func(dists, ell=1., method="invpow"):
         return np.exp(-dists * ell), ell
 
 
-# TODO: make docstring
 class SpatialGraph(Graph):
-    """"
+    """
+    The SpatialGraph class is a child of NetworkX's Graph class.
 
+    The SpatialGraph class is a child class of NetworkX's Graph class
+    and inherits all its functionality. It has the additional
+    attributes dists, locs and part which to store the 
+    pairwise distances between nodes, node spatial locations
+    and the graph's community structure, if known.
+
+    Additionally it has two class methods which allow it to be
+    instantiated as a random spatial network from a list of parameters.
+
+    Parameters
+    ----------
+    incoming_graph_data : input graph, optional (default=None)
+        Data to initialize graph. If None (default) an empty
+        graph is created.  The data can be any format that is supported
+        by the to_networkx_graph() function, currently including edge list,
+        dict of dicts, dict of lists, NetworkX graph, NumPy matrix
+        or 2d ndarray, SciPy sparse matrix, or PyGraphviz graph.
+    attr : keyword arguments, optional (default=no attributes)
+        Attributes to add to graph as key=value pairs.
+
+    Examples:
+        ---------
+    >>> from community import SpatialGraph
+    >>> g = SpatialGraph.from_gravity_benchmark(0.5, 2)
     """
 
     def __init__(self):
@@ -51,21 +90,18 @@ class SpatialGraph(Graph):
         self.part = {}
         self.locs = array([])
 
-    # tidied
     def add_distances(self, dists):
         if type(dists) != np.ndarray:
             raise TypeError("dists must be a numpy.ndarray not"
                             f"a {type(dists).__name__}")
         self.dists = dists
 
-    # tidied
     def add_flows(self, fmat):
         if type(fmat) != np.ndarray:
             raise TypeError("dists must be a numpy.ndarray not "
                             f"a {type(fmat).__name__}")
         self.fmat = fmat
 
-    # tidied
     def copy(self):
         # __copy__() wasn't being implemented when I tried
         new_graph = super().copy()
@@ -73,8 +109,6 @@ class SpatialGraph(Graph):
         new_graph.fmat = self.fmat.copy()
         return new_graph
 
-    # tidied
-    # TODO: test to check dims correct and dists symmetric
     @classmethod
     def from_numpy_array(cls, fmat, **kwargs):
         """

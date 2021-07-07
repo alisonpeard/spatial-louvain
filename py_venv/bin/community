@@ -1,0 +1,7 @@
+#!/Users/alison/Documents/Oxford/Python/spatial-louvain/py_venv/bin/python3
+# EASY-INSTALL-DEV-SCRIPT: 'spatial-louvain==0.15','community'
+__requires__ = 'spatial-louvain==0.15'
+__import__('pkg_resources').require('spatial-louvain==0.15')
+__file__ = '/Users/alison/Documents/Oxford/Python/spatial-louvain/bin/community'
+with open(__file__) as f:
+    exec(compile(f.read(), __file__, 'exec'))

@@ -19,7 +19,10 @@ setup(
     packages=find_packages(),
     install_requires=[
         "networkx",
-        "numpy"
+        "numpy",
+        "scipy",
+        "sklearn",
+        "matplotlib"
     ],
 
     scripts=['bin/community']

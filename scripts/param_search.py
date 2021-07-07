@@ -6,6 +6,8 @@ from sklearn.metrics import normalized_mutual_info_score
 import matplotlib.pyplot as plt
 import timeit
 
+# functions to help plotting
+
 
 def colorbar(mappable, label=None):
     '''adapted from https://joseph-long.com/writing/colorbars/'''
@@ -38,7 +40,9 @@ def get_nmi(lamb, rho, N=20, len=20, nruns=5):
         partition_grav\
             = community_louvain.gravity.best_partition(g, resolution=2.,
                                                        ell=2.,
-                                                       decay_method="invpow", random_state=1)
+                                                       decay_method="invpow",
+                                                       random_state=1)
+
         time_grav += timeit.default_timer() - t
         t = timeit.default_timer()
         partition_ng = community_louvain.newman_girvan.best_partition(
@@ -116,7 +120,6 @@ colorbar(im1, "NMI")
 colorbar(im2, "NMI")
 
 # surface plot of the NMIs
-# TODO: axes labels
 fig2, ax2 = plt.subplots(1, 2, subplot_kw={"projection": "3d"})
 X, Y = np.meshgrid(rhos, lambs)
 surf1 = ax2[0].plot_surface(X, Y, nmi_grav, cmap=plt.cm.viridis,
